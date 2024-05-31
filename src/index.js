@@ -9,6 +9,8 @@
 import express from 'express';
 import empleadosRoutes from './routes/empleados.routes.js';
 import indexRoutes from './routes/index.routes.js';
+import './config.js'
+import { SERVER_PORT } from './config.js';
 
 const app = express();
 
@@ -17,6 +19,12 @@ app.use(express.json());
 app.use(indexRoutes);
 app.use(empleadosRoutes);
 
-app.listen(3000);
-console.log("Servidor en puerto 3000");
+app.use((req, res, next) =>{
+    res.status(404).json({
+        message: 'Ruta no encontrada'
+    })
+})
+
+app.listen(SERVER_PORT);
+console.log("Servidor en puerto", SERVER_PORT);
 
